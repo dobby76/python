@@ -1,0 +1,20 @@
+
+import turtle #모듈 이용
+
+t = turtle.Turtle() #turtle 객체 생성, t 변수에 할당
+t.shape("turtle") #모양 설정
+
+r = 50 #반지름 설정
+t.circle(r) #반지름이 r인 원을 그림
+t.fd(30) #앞으로 30 이동 
+t.circle(r) #반지름이 r인 원을 그림
+t.fd(30) #앞으로 30 이동 
+t.circle(r) #반지름이 r인 원을 그림
+t.fd(50) #앞으로 50 이동
+for _ in range(4): #반복문, 4번 반복
+    t.forward(2*r) #앞으로 2*r 이동
+    t.right(90) 
+#한 변의 길이가 반지름*2인 정사각형을 그림    
+for _ in range(3): #반복문, 3번 반복
+    t.forward(2*r) #앞으로 2*r 이동
+    t.right(120)
