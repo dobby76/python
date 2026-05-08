@@ -1,0 +1,8 @@
+# tuple: 나열,리스트와 유사하지만 값 변경 불가
+tuple = (1,2,3,4) 
+print(tuple)
+print(tuple[2])
+# tuple[3]=50 값 변경 안 됨
+
+mix_tuple = (10,20,"aaa")
+print(mix_tuple)
