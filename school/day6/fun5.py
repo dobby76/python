@@ -1,0 +1,16 @@
+# 함수의 가변 매개변수
+# *args: "arguments"의 약자로, 위치 인자들을 함수로 전달할 때
+# 사용.(튜플)
+# **kwargs: "keyword arduments"의 약자로, 키워드 인자들을 함수로 전달할 때 사용(딕셔너리)
+
+def manyParam(*args):
+    # 몇개의 매개변수를 받을 지 모를때는 변수 앞에 '*'를 붙여준다.
+    print(type(args)) # 튜플(tuple)로 저장
+    sum = 0
+    for i in range:
+        sum += 1
+    return sum
+
+print(manyParam(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)) # 55\
+print(manyParam(1, 2, 3, 4, 5)) # 15
+print('-'*30)
