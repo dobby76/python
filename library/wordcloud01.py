@@ -1,0 +1,46 @@
+# 워드 클라우드(wordcloud)
+# - 특정 단어의 빈도나 중요성을 글자의 크기로 나타낸 이미지
+
+from collections import Counter
+from kiwipiepy import Kiwi
+import matplotlib.pyplot as plt
+from wordcloud import WordCloud
+
+# 1. Kiwi 객체 생성
+kiwi = Kiwi()
+
+text = """
+도널드 트럼프(오른쪽) 미국 대통령이 김정은(왼쪽) 북한 국무위원장에게 정상회담 개최 러브콜을 보내고 있는 가운데, 백악관도 북한과 전제조건 없는 대화가 열려 있다는 방침을 재확인했다.
+백악관은 1일(현지시간) 북미정상회담을 위한 준비가 진행되고 있느냐는 언론 질의에 “미국의 대북정책은 변하지 않았다”면서 “트럼프 대통령은 어떤 전제조건 없이 김정은과 대화하는 데 여전히 열려 있다”고 답했다. 아울러 “트럼프 대통령은 첫 임기에 김정은과 한반도를 안정시키는 세 차례 역사적인 회담을 했다“고 부연했다. 다만 미국의 대북정책에 북한의 완전한 비핵화 목표가 포함되는지에 대해서는 별도로 언급하지 않았다.
+백악관은 지난해부터 트럼프 대통령이 전제조건 없는 김 위원장과의 대화에 열려 있다는 입장을 거듭 내며 북한에 유화 메시지를 냈다. 미 국무부도 지난달 같은 입장을 밝힌 바 있다. 다만 국무부는 “북한의 완전한 비핵화에 계속 전념하고 있다”는 입장도 낸 반면, 백악관은 이에 대한 언급이 없었다. 트럼프 대통령은 지난달 취재진과 만난 자리에서 ‘북미 대화 재개 목표가 북한 비핵화인가’라는 질문에 “그 얘기는 하고 싶지 않다”며 답변을 회피했다. 이에 대해 일각에서는 트럼프 대통령이 북한의 핵보유 인정을 전제로 한 북미 대화를 염두에 둔 게 아니냐는 관측이 나왔다.
+한편 트럼프 1기 행정부에서 백악관 안보보좌관을 지낸 존 볼턴은 이날 워싱턴DC의 한미연구소(ICAS)가 주최한 화상 대담에서 트럼프 대통령이 평양에서 북미정상회담을 추진할 것이란 전망을 냈다. 그는 “트럼프 대통령이 (2018년) 싱가포르에서 북한 지도자를 만난 최초의 미국 대통령이 됐고, 2019년 비무장지대(DMZ) 회동에선 북한 땅에 들어간 최초의 미국 대통령이 됐다”며 “남은 건 바로 평양을 방문하는 것”이라고 진단했다. 볼턴은 또 “트럼프 대통령은 사진이 필요해 (북미) 회담을 원한다. 관심을 다른 데로 돌리고 싶기 때문”이라고도 했다.
+"""
+# 2. 형태소 분석 진행
+tokens = kiwi.tokenize(text)
+word_list = []
+
+# 3. 명사(NNG, NNP)와 형용사(VA) 추출
+for token in tokens:
+    if token.tag in ['NNG','NNP','VA']:
+        if len(token.form) > 1:
+            word_list.append(token.form)
+
+# 3. 단어 빈도수 계상
+word_list_count = Counter(word_list)
+
+# 4. 워드클라우드 객체 생성
+wc = WordCloud(
+    font_path='AppleGothic',
+    width=400,
+    height=400,
+    background_color='white' # 배경색을 흰색으로 변경
+)
+
+# 5. 빈도수 데이터로 워드클라우드 생성
+result = wc.generate_from_frequencies(word_list_count)
+
+# 6. matplolib로 출력
+plt.figure(figsize=(6,6))
+plt.imshow(result,interpolation='bilinear')
+plt.axis('off') # 축 레이블 제거
+plt.show()
